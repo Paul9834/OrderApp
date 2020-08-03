@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.paul9834.orderapp_mvvm.R
 import com.paul9834.orderapp_mvvm.data.DataSourceImpl
+import com.paul9834.orderapp_mvvm.data.model.ProductItem
 import com.paul9834.orderapp_mvvm.domain.RepoImpl
 import com.paul9834.orderapp_mvvm.ui.adapter.FoodAdapter
 import com.paul9834.orderapp_mvvm.ui.viewmodel.MainViewModel
@@ -21,7 +24,7 @@ import com.paul9834.orderapp_mvvm.vo.Resource
 import kotlinx.android.synthetic.main.fragment_food.*
 
 
-class FoodFragment : Fragment() {
+class FoodFragment : Fragment() ,FoodAdapter.onButtonClickListener{
 
     private val viewModel by activityViewModels<MainViewModel> {
         VMFactory(
@@ -46,14 +49,34 @@ class FoodFragment : Fragment() {
         swipe_refresh.isEnabled = false
 
         setupRecyclerView()
-        setupObservers ()
+        setupObservers()
+
+
+        floating_action_button.setOnClickListener{
+            findNavController().navigate(R.id.action_foodFragment_to_cartFragment)
+        }
 
 
     }
 
+   /* private fun setupSearchView () {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                viewModel.setFood(p0!!)
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+
+        })
+
+    }*/
+
     private fun setupObservers () {
 
-        viewModel.fetchTragosList.observe (viewLifecycleOwner, Observer { result ->
+        viewModel.fetchProductsList.observe (viewLifecycleOwner, Observer { result ->
 
             when (result) {
                 is Resource.Loading -> {
@@ -63,7 +86,7 @@ class FoodFragment : Fragment() {
                 is Resource.Success -> {
                     Log.e("Error", "Sucesss")
                     swipe_refresh.isRefreshing = false
-                    foods.adapter = FoodAdapter (requireContext(), result.data.toMutableList())
+                    foods.adapter = FoodAdapter (requireContext(), result.data.toMutableList(), this)
                 }
                 is Resource.Failure -> {
                     Log.e("Error", "Fail")
@@ -91,6 +114,16 @@ class FoodFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_food, container, false)
+    }
+
+    override fun onButtonClick(productItem: ProductItem, position: Int) {
+
+        val bundle = Bundle()
+        bundle.putParcelable("product", productItem)
+
+        findNavController().navigate(R.id.action_foodFragment_to_productDetailsFragment, bundle)
+
+
     }
 
 

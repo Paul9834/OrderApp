@@ -1,39 +1,32 @@
 package com.paul9834.orderapp_mvvm.data.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-data class Food(
-    @field:SerializedName("href")
-    val href: String? = null,
+class Product : ArrayList<ProductItem>()
 
-    @field:SerializedName("title")
-    val title: String? = null,
 
-    @field:SerializedName("version")
-    val version: Double? = null,
-
-    @field:SerializedName("results")
-    val drinksList:List<ResultsItem> = listOf()
-)
-
-data class ResultsItem(
-
-    @field:SerializedName("thumbnail")
-    val thumbnail: String? = null,
-
-    @field:SerializedName("ingredients")
-    val ingredients: String? = null,
-
-    @field:SerializedName("href")
-    val href: String? = null,
-
-    @field:SerializedName("title")
-    val title: String? = null
-
-)
+@Parcelize
+data class ProductItem(
+    @SerializedName("createdAt")
+    val createdAt: String = "",
+    @SerializedName("description")
+    val description: String = "",
+    @SerializedName("id")
+    val id: Int = 0,
+    @SerializedName("img_url")
+    val img_url: String = "",
+    @SerializedName("name")
+    val name: String = "",
+    @SerializedName("price")
+    val price: Int = 0,
+    @SerializedName("updatedAt")
+    val updatedAt: String = ""
+) : Parcelable
 
 //CORREGIR //
 

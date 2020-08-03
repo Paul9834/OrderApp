@@ -7,6 +7,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.FoodFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +20,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/mazzardhbold"
         android:textSize="35sp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:text="Bienvenido" />
@@ -37,7 +41,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="10dp">
@@ -50,18 +54,37 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/foods"
-        android:fadingEdge="vertical"
-        android:fadingEdgeLength="30dp"
-        android:requiresFadingEdge="vertical"
-        android:layout_width="match_parent"
+            android:id="@+id/foods"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        tools:listitem="@layout/food_row"
-        />
+            android:layout_marginEnd="20dp"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="30dp"
+            android:requiresFadingEdge="vertical"
+            tools:listitem="@layout/food_row"/>
+
     </LinearLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floating_action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginBottom="50dp"
+                android:layout_gravity="bottom|right"
+                android:layout_above="@id/bottom_navigation"
+                app:srcCompat="@drawable/ic_baseline_shopping_cart_24"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    </RelativeLayout>
 
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

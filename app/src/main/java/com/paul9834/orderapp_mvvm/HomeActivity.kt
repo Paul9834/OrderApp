@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.paul9834.orderapp_mvvm.R
 import kotlinx.android.synthetic.main.activity_home.*
@@ -19,6 +20,7 @@ class HomeActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.nav_host_fragment)
         bottom_navigation.setupWithNavController(navController)
+
 
 
     }

@@ -9,23 +9,20 @@ import java.lang.Exception
 
 class MainViewModel(private val repo:Repo) : ViewModel() {
 
-    private val foodData = MutableLiveData<String> ()
-
-    fun setFood (foodName:String) {
+  /*  fun setFood (foodName:String) {
         foodData.value = foodName
-    }
+    }*/
 
-    init {
+ /*   init {
         setFood("omelet")
-    }
+    }*/
 
-    val fetchTragosList = foodData.distinctUntilChanged().switchMap { nombreTrago ->
-        liveData(Dispatchers.IO) {
+   val fetchProductsList = liveData(Dispatchers.IO)  {
             emit(Resource.Loading())
             try {
-                val drinkList = repo.getFoodList(nombreTrago)
+                val drinkList = repo.getFoodList()
                 if (drinkList is Resource.Success) {
-                    if (drinkList.data != null) {
+                    if (drinkList.data.isNotEmpty()) {
                         emit(drinkList)
                     } else {
                         emit(Resource.Failure(Exception("No encontrado")))
@@ -40,5 +37,26 @@ class MainViewModel(private val repo:Repo) : ViewModel() {
 
 
 
+   /* val fetchTragosList = foodData.distinctUntilChanged().switchMap { nombreTrago ->
 
-}
+        liveData(Dispatchers.IO) {
+            emit(Resource.Loading())
+            try {
+                val drinkList = repo.getFoodList(nombreTrago)
+                if (drinkList is Resource.Success) {
+                    if (drinkList.data.isNotEmpty()) {
+                        emit(drinkList)
+                    } else {
+                        emit(Resource.Failure(Exception("No encontrado")))
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("Error", "" + e)
+                emit(Resource.Failure(e))
+            }
+        }
+    }*/
+
+
+
+
