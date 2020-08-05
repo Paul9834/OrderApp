@@ -7,11 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.*
 import com.paul9834.orderapp_mvvm.R
 import com.paul9834.orderapp_mvvm.data.DataSourceImpl
+import com.paul9834.orderapp_mvvm.data.model.CartEntity
 import com.paul9834.orderapp_mvvm.data.model.ProductItem
 import com.paul9834.orderapp_mvvm.domain.RepoImpl
 import com.paul9834.orderapp_mvvm.ui.viewmodel.MainViewModel
@@ -48,6 +52,10 @@ class ProductDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        enterTransition = MaterialFade()
+
+
+
         requireArguments().let { bundle ->
 
             productItem = bundle.getParcelable<ProductItem>("product")!!
@@ -56,6 +64,8 @@ class ProductDetailsFragment : Fragment() {
 
         }
     }
+
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,6 +79,19 @@ class ProductDetailsFragment : Fragment() {
         txt_titulo_product.text = productItem.name
         txt_precio_product.text = "$ " + productItem.price
         txt_description_product.text = productItem.description
+
+        btn_addcart.setOnClickListener{
+
+            viewModel.guardarItem(CartEntity(productItem.id, productItem.createdAt, productItem.description, productItem.img_url, productItem.name, productItem.price, productItem.updatedAt))
+            Snackbar.make(view, "Se ha agregado el producto con exito",Snackbar.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_productDetailsFragment_to_foodFragment2)
+
+
+        }
+
+        btn_cancel_item.setOnClickListener{
+            findNavController().navigate(R.id.action_productDetailsFragment_to_foodFragment2)
+        }
 
 
     }

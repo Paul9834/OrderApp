@@ -9,9 +9,12 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.*
 import com.paul9834.orderapp_mvvm.R
 import com.paul9834.orderapp_mvvm.data.DataSourceImpl
 import com.paul9834.orderapp_mvvm.data.model.ProductItem
@@ -39,6 +42,10 @@ class FoodFragment : Fragment() ,FoodAdapter.onButtonClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        enterTransition = MaterialElevationScale(true)
+
+       // reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
 
 
     }
@@ -121,7 +128,8 @@ class FoodFragment : Fragment() ,FoodAdapter.onButtonClickListener{
         val bundle = Bundle()
         bundle.putParcelable("product", productItem)
 
-        findNavController().navigate(R.id.action_foodFragment_to_productDetailsFragment, bundle)
+        val extras = FragmentNavigatorExtras(start_view to "shared_element_container")
+        findNavController().navigate(R.id.action_foodFragment_to_productDetailsFragment, bundle,null, extras)
 
 
     }
