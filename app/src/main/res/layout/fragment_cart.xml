@@ -33,14 +33,33 @@
             android:layout_marginLeft="30dp"
             android:text="Confirma los detalles de tu pedido"/>
 
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:gravity="center"
+      >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_cart_items"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp" />
+      <TextView
+          android:id="@+id/text_empty_Cart"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text="Tu carrito esta vacio."
+          android:textColor="@color/primaryColor"
+          android:visibility="gone"
+          android:fontFamily="@font/mazzardhbold"/>
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rv_cart_items"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginEnd="20dp" />
+
+  </LinearLayout>
+
     </LinearLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

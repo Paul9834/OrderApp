@@ -50,8 +50,8 @@
         android:text="Producto" />
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
         android:focusable="true"
@@ -60,6 +60,8 @@
         android:layout_marginTop="30dp"
         app:cardElevation="30dp"
         app:cardMaxElevation="50dp"
+        android:outlineAmbientShadowColor="@color/purple_500"
+        android:outlineSpotShadowColor="@color/primaryDarkColor"
         android:layout_gravity="center">
 
         <LinearLayout
@@ -70,8 +72,8 @@
 
             <ImageView
                 android:id="@+id/img_product"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
 
         </LinearLayout>
 
@@ -81,7 +83,7 @@
         <TextView
             android:id="@+id/txt_precio_product"
             android:fontFamily="@font/groteskly"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Precio"
@@ -97,7 +99,7 @@
         android:gravity="center"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="70dp"
         android:layout_marginTop="12dp" />
 
 

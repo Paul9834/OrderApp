@@ -9,7 +9,7 @@ object RetrofitClient {
 
     val webservice: WebService by lazy {
         Retrofit.Builder()
-            .baseUrl("http://192.168.0.5:5000")
+            .baseUrl("http://192.168.0.5:5000/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build().create(WebService::class.java)
 

@@ -17,9 +17,12 @@
         android:clickable="true"
         android:focusable="true"
         android:checkable="true"
+        android:outlineAmbientShadowColor="@color/purple_500"
+        android:outlineSpotShadowColor="@color/primaryDarkColor"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="10dp"
-        app:cardElevation="4dp">
+        app:cardMaxElevation="30dp"
+        app:cardElevation="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"

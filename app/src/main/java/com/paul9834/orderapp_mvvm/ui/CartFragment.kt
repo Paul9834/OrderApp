@@ -15,23 +15,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.transition.MaterialFade
 import com.paul9834.orderapp_mvvm.R
 import com.paul9834.orderapp_mvvm.data.DataSourceImpl
-import com.paul9834.orderapp_mvvm.data.model.CartEntity
-import com.paul9834.orderapp_mvvm.data.model.ProductItem
+import com.paul9834.orderapp_mvvm.data.model.*
 import com.paul9834.orderapp_mvvm.domain.RepoImpl
 import com.paul9834.orderapp_mvvm.ui.adapter.CartAdapter
+import com.paul9834.orderapp_mvvm.ui.adapter.FoodAdapter
 import com.paul9834.orderapp_mvvm.ui.viewmodel.MainViewModel
 import com.paul9834.orderapp_mvvm.ui.viewmodel.VMFactory
 import com.paul9834.orderapp_mvvm.vo.AppDataBase
 import com.paul9834.orderapp_mvvm.vo.Resource
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_food.*
 
 
-class CartFragment : Fragment(), CartAdapter.onButtonClickListener {
+class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.onMoreChooseListener, CartAdapter.onReduceChooseListener {
 
-
-    private lateinit var adapter:CartAdapter
-
-
+    private lateinit var adapterCart:CartAdapter
 
     private val viewModel by activityViewModels<MainViewModel> {
         VMFactory(
@@ -48,6 +46,7 @@ class CartFragment : Fragment(), CartAdapter.onButtonClickListener {
 
         enterTransition = MaterialFade()
 
+
     }
 
     override fun onCreateView(
@@ -63,6 +62,8 @@ class CartFragment : Fragment(), CartAdapter.onButtonClickListener {
 
         setupRecyclerView()
         setupObservers()
+        btn_pay_details.hide()
+
 
         btn_pay_details.setOnClickListener{
             findNavController().navigate(R.id.action_cartFragment_to_paymentFragment)
@@ -80,40 +81,61 @@ class CartFragment : Fragment(), CartAdapter.onButtonClickListener {
 
     private fun setupObservers() {
 
-        viewModel.getTragosFavorites().observe(viewLifecycleOwner, Observer { result ->
+        viewModel.getDataTable().observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Resource.Loading -> {
                 }
                 is Resource.Success -> {
-
-
                     Log.e("Result", "${result.data}")
+                    val resultData = result.data
 
 
                     val cart = result.data.map {
-                        ProductItem(it.id, it.createdAt, it.updatedAt, it.name, it.description, it.img_url, it.price)
+                        CartAndItemC(it.cart, it.itemEntity)
                     }.toMutableList()
 
-                    adapter = CartAdapter(requireContext(), cart, this)
-                    rv_cart_items.adapter = adapter
-                }
+                    adapterCart = CartAdapter(requireContext(), cart, this, this, this)
+                    rv_cart_items.adapter = adapterCart
 
-                is Resource.Failure -> {
+
+                    btn_pay_details.show()
 
                 }
             }
-
         })
-
     }
+    override fun onButtonClick(cartAndItemC: CartAndItemC, position: Int) {
 
-    override fun onButtonClick(productItem: ProductItem, position: Int) {
+        viewModel.deleteCartEntity(cartAndItemC.cart)
+        viewModel.deleteItemEntity(cartAndItemC.itemEntity)
 
-        viewModel.deleteCartEntity(CartEntity(productItem.id, productItem.createdAt, productItem.description, productItem.img_url, productItem.name, productItem.price, productItem.updatedAt))
-        adapter.deleteItem(position)
+        adapterCart.deleteItem(position)
         Toast.makeText(requireContext(), "Se borró el articulo del carrito", Toast.LENGTH_SHORT).show()
 
 
     }
+
+    override fun onButtonClick2(cartAndItemC: CartAndItemC, position: Int) {
+/*
+        val quantitiy = cartAndItemC.cart.cantidad + 1
+
+        viewModel.saveCartEntity(cartAndItemC.cart)*/
+
+        viewModel.saveCart(cartAndItemC.cart)
+
+        Toast.makeText(requireContext(), "Agregaste ${cartAndItemC.cart.cantidad}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onButtonClick3(cartAndItemC: CartAndItemC, position: Int) {
+/*
+        val quantitiy = cartAndItemC.cart.cantidad + 1
+
+        viewModel.saveCartEntity(cartAndItemC.cart)*/
+
+        viewModel.saveCart(cartAndItemC.cart)
+
+        Toast.makeText(requireContext(), "Eliminaste ${cartAndItemC.cart.cantidad}", Toast.LENGTH_SHORT).show()
+    }
+
 }
 

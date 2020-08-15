@@ -15,7 +15,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.*
 import com.paul9834.orderapp_mvvm.R
 import com.paul9834.orderapp_mvvm.data.DataSourceImpl
-import com.paul9834.orderapp_mvvm.data.model.CartEntity
+import com.paul9834.orderapp_mvvm.data.model.Cart
+import com.paul9834.orderapp_mvvm.data.model.Item
+import com.paul9834.orderapp_mvvm.data.model.ItemEntity
 import com.paul9834.orderapp_mvvm.data.model.ProductItem
 import com.paul9834.orderapp_mvvm.domain.RepoImpl
 import com.paul9834.orderapp_mvvm.ui.viewmodel.MainViewModel
@@ -82,8 +84,18 @@ class ProductDetailsFragment : Fragment() {
 
         btn_addcart.setOnClickListener{
 
-            viewModel.guardarItem(CartEntity(productItem.id, productItem.createdAt, productItem.description, productItem.img_url, productItem.name, productItem.price, productItem.updatedAt))
+
+            val cart: Cart = Cart()
+
+            val itemEntity:ItemEntity = ItemEntity(productItem.id, productItem.createdAt, productItem.description, productItem.img_url, productItem.name, productItem.price, productItem.updatedAt)
+
+            viewModel.guardarItem(cart, itemEntity)
+
+
+
             Snackbar.make(view, "Se ha agregado el producto con exito",Snackbar.LENGTH_SHORT).show()
+
+
             findNavController().navigate(R.id.action_productDetailsFragment_to_foodFragment2)
 
 

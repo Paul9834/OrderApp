@@ -1,0 +1,23 @@
+[{
+  "id": 1,
+  "quantitiy": 3,
+  "item": {
+    "id": 1,
+    "name": "Huevos Frescampo X30",
+    "description": "Huevo Rojo A Insuperable, 30 Unidad(es). 1032680",
+    "price": 8950,
+    "createdAt": "2020-08-08T20:13:33",
+    "updatedAt": "2020-08-08T20:13:33"
+  }
+}, {
+  "id": 2,
+  "quantitiy": 2,
+  "item": {
+    "id": 2,
+    "name": "Banano Criollo",
+    "description": "Banano Criollo",
+    "price": 630,
+    "createdAt": "2020-08-08T20:13:33",
+    "updatedAt": "2020-08-08T20:13:33"
+  }
+}]

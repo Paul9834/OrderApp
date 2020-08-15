@@ -1,7 +1,8 @@
 package com.paul9834.orderapp_mvvm.domain
 
-import androidx.lifecycle.MutableLiveData
-import com.paul9834.orderapp_mvvm.data.model.CartEntity
+import com.paul9834.orderapp_mvvm.data.model.Cart
+import com.paul9834.orderapp_mvvm.data.model.CartAndItemC
+import com.paul9834.orderapp_mvvm.data.model.ItemEntity
 import com.paul9834.orderapp_mvvm.data.model.ProductItem
 import com.paul9834.orderapp_mvvm.vo.Resource
 
@@ -10,14 +11,28 @@ interface Repo {
     suspend fun getFoodList(): Resource<List<ProductItem>>
 
 
-    suspend fun insertCart(cartEntity: CartEntity)
+    suspend fun insertCart(itemEntity: ItemEntity)
 
-    suspend fun getCarrito(): Resource<List<CartEntity>>
+    suspend fun getCarrito(): Resource<List<ItemEntity>>
+
+    suspend fun getTotalOrder() : Int?
 
 
-    suspend fun deleteCarroEntity(cartEntity: CartEntity)
+    suspend fun getCartAndItemC(): Resource<List<CartAndItemC>>
 
-    suspend fun getTotalOrder() : Resource<Int>
+    suspend fun insertCartAndItem(cart: Cart, itemEntity: ItemEntity)
+
+
+    suspend fun deleteCartEntity(cart: Cart)
+
+    suspend fun deleteEntity(itemEntity: ItemEntity)
+
+    suspend fun addCart(cart: Cart)
+
+
+
+
+
 
 
 

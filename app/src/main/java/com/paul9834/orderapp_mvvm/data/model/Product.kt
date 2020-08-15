@@ -1,9 +1,7 @@
 package com.paul9834.orderapp_mvvm.data.model
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
@@ -37,8 +35,11 @@ data class ProductItem(
 
 //CORREGIR //
 
-@Entity(tableName = "cartEntity")
-data class CartEntity(
+
+
+
+@Entity(tableName = "itemEntity")
+data class ItemEntity(
         @PrimaryKey
         val id: Int = 0,
         @ColumnInfo(name = "producto_createdat")
@@ -52,7 +53,24 @@ data class CartEntity(
         @ColumnInfo(name = "producto_precio")
         val price: Int = 0,
         @ColumnInfo(name = "producto_updatedAt")
-        val updatedAt: String = ""     )
+        val updatedAt: String = ""
+)
+
+
+
+
+
+/*
+@Entity(tableName = "cart")
+data class Cart(
+
+        @PrimaryKey
+        val id: Int = 0,
+        @ColumnInfo(name = "cantidad")
+        val quantitiy: Int
+
+)
+*/
 
 
 

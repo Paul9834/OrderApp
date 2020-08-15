@@ -2,8 +2,8 @@ package com.paul9834.orderapp_mvvm.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.paul9834.orderapp_mvvm.data.model.CartEntity
-import com.paul9834.orderapp_mvvm.data.model.ProductItem
+import com.paul9834.orderapp_mvvm.data.model.Cart
+import com.paul9834.orderapp_mvvm.data.model.ItemEntity
 import com.paul9834.orderapp_mvvm.domain.Repo
 import com.paul9834.orderapp_mvvm.vo.Resource
 import kotlinx.coroutines.Dispatchers
@@ -12,22 +12,34 @@ import java.lang.Exception
 
 class MainViewModel(private val repo:Repo) : ViewModel() {
 
-    /*  fun setFood (foodName:String) {
-        foodData.value = foodName
-    }*/
 
-    /*   init {
-        setFood("omelet")
-    }*/
-
-    val getTotalOrderPrice = liveData(Dispatchers.IO) {
-        emit(Resource.Loading())
-        try {
-            emit(repo.getTotalOrder())
-        } catch (e: Exception) {
-            emit(Resource.Failure(e))
+    /*  fun getTotal(): LiveData<Resource<Int>> {
+        val result = MutableLiveData<Resource<Int>>()
+        viewModelScope.launch {
+            val returnedrepo = repo.getTotalOrder()
+            result.postValue(returnedrepo)
         }
+        return result
+    }*/
+
+    val totalOrder: MutableLiveData<Int> = MutableLiveData()
+
+    fun result() = viewModelScope.launch {
+        val returnedrepo = repo.getTotalOrder()
+
+        totalOrder.postValue(returnedrepo)
+
     }
+
+/*    fun createOrder(invoice: Invoice) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                repo.createOrder(invoice)
+            } catch (e :Exception) {
+                Log.e("Error",   "$e error")
+            }
+        }
+    }*/
 
 
 
@@ -49,28 +61,53 @@ class MainViewModel(private val repo:Repo) : ViewModel() {
     }
 
 
-    fun guardarItem(cartEntity: CartEntity) {
+    fun guardarItem(cart: Cart, itemEntity: ItemEntity) {
         viewModelScope.launch {
-            repo.insertCart(cartEntity)
+            repo.insertCartAndItem(cart, itemEntity)
         }
     }
 
-    fun getTragosFavorites() = liveData(Dispatchers.IO) {
 
+    fun getDataTable() = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+
+        try {
+            emit(repo.getCartAndItemC())
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
+        }
+    }
+
+
+
+    fun getTragosFavorites() = liveData(Dispatchers.IO) {
         emit(Resource.Loading())
         try {
             emit(repo.getCarrito())
         } catch (e: Exception) {
             emit(Resource.Failure(e))
         }
-
     }
 
-    fun deleteCartEntity(cartEntity: CartEntity) {
+    fun deleteCartEntity(cart: Cart) {
         viewModelScope.launch {
-            repo.deleteCarroEntity(cartEntity)
+            repo.deleteCartEntity(cart)
         }
     }
+
+    fun deleteItemEntity(itemEntity: ItemEntity) {
+        viewModelScope.launch {
+            repo.deleteEntity(itemEntity)
+        }
+    }
+
+    fun saveCart (cart: Cart) {
+        viewModelScope.launch {
+            repo.addCart(cart)
+        }
+    }
+
+
 
 
 }

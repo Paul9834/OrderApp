@@ -1,8 +1,9 @@
 package com.paul9834.orderapp_mvvm.data
 
 
-import androidx.lifecycle.MutableLiveData
-import com.paul9834.orderapp_mvvm.data.model.CartEntity
+import com.paul9834.orderapp_mvvm.data.model.Cart
+import com.paul9834.orderapp_mvvm.data.model.CartAndItemC
+import com.paul9834.orderapp_mvvm.data.model.ItemEntity
 import com.paul9834.orderapp_mvvm.data.model.ProductItem
 import com.paul9834.orderapp_mvvm.domain.DataSource
 import com.paul9834.orderapp_mvvm.vo.AppDataBase
@@ -15,21 +16,38 @@ class DataSourceImpl (private val appDataBase:AppDataBase):DataSource{
         return Resource.Success(RetrofitClient.webservice.getComidaByName())
     }
 
-    override suspend fun insertCartItemRoom(cartEntity: CartEntity) {
-        appDataBase.userCart().insertProduct(cartEntity)
+    override suspend fun insertCartItemRoom(itemEntity: ItemEntity) {
+        appDataBase.userCart().insertProduct(itemEntity)
     }
 
-    override suspend fun getUserCart(): Resource<List<CartEntity>> {
+    override suspend fun getUserCart(): Resource<List<ItemEntity>> {
         return Resource.Success(appDataBase.userCart().getProductList())
     }
 
-    override suspend fun deleteCartItem(cartEntity: CartEntity) {
-        appDataBase.userCart().deleteProduct(cartEntity)
+    override suspend fun deleteCartItem(itemEntity: ItemEntity) {
+        appDataBase.userCart().deleteProduct(itemEntity)
     }
 
-    override suspend fun getTotalOrder(): Resource<Int> {
-        return Resource.Success(appDataBase.userCart().getTotalPrice())
+    override suspend fun getTotalOrder(): Int? {
+        return appDataBase.userCart().getTotalPrice()
     }
+
+    override suspend fun getDogsAndOwners(): Resource<List<CartAndItemC>> {
+        return Resource.Success(appDataBase.userCart().getDogsAndOwners())
+    }
+
+    override suspend fun insertCartAndItem(cart: Cart, itemEntity: ItemEntity) {
+        return appDataBase.userCart().insertCartAndItem(cart, itemEntity)
+    }
+
+    override suspend fun deleteCart(cart: Cart) {
+        return appDataBase.userCart().deleteCart(cart)
+    }
+
+    override suspend fun addCart(cart: Cart) {
+        appDataBase.userCart().insertCart(cart)
+    }
+
 
 
 }
