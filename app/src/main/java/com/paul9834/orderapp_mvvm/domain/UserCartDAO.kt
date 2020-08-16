@@ -18,19 +18,19 @@ interface UserCartDAO {
     suspend fun insertProduct(product: ItemEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCart(cart: Cart)
+    suspend fun insertCart(cartEntity: CartEntity)
 
 
-    suspend fun insertCartAndItem(cart: Cart, itemEntity: ItemEntity) {
+    suspend fun insertCartAndItem(cartEntity: CartEntity, itemEntity: ItemEntity) {
         insertProduct(itemEntity)
-        cart.id = itemEntity.id
-        insertCart(cart)
+        cartEntity.id = itemEntity.id
+        insertCart(cartEntity)
     }
 
     //falta delete//
 
     @Delete
-    suspend fun deleteCart(cart: Cart)
+    suspend fun deleteCart(cartEntity: CartEntity)
 
 
     @Delete

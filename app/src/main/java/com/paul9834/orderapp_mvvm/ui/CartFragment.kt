@@ -18,13 +18,11 @@ import com.paul9834.orderapp_mvvm.data.DataSourceImpl
 import com.paul9834.orderapp_mvvm.data.model.*
 import com.paul9834.orderapp_mvvm.domain.RepoImpl
 import com.paul9834.orderapp_mvvm.ui.adapter.CartAdapter
-import com.paul9834.orderapp_mvvm.ui.adapter.FoodAdapter
 import com.paul9834.orderapp_mvvm.ui.viewmodel.MainViewModel
 import com.paul9834.orderapp_mvvm.ui.viewmodel.VMFactory
 import com.paul9834.orderapp_mvvm.vo.AppDataBase
 import com.paul9834.orderapp_mvvm.vo.Resource
 import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.fragment_food.*
 
 
 class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.onMoreChooseListener, CartAdapter.onReduceChooseListener {
@@ -91,7 +89,7 @@ class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.
 
 
                     val cart = result.data.map {
-                        CartAndItemC(it.cart, it.itemEntity)
+                        CartAndItemC(it.cartEntity, it.itemEntity)
                     }.toMutableList()
 
                     adapterCart = CartAdapter(requireContext(), cart, this, this, this)
@@ -106,7 +104,7 @@ class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.
     }
     override fun onButtonClick(cartAndItemC: CartAndItemC, position: Int) {
 
-        viewModel.deleteCartEntity(cartAndItemC.cart)
+        viewModel.deleteCartEntity(cartAndItemC.cartEntity)
         viewModel.deleteItemEntity(cartAndItemC.itemEntity)
 
         adapterCart.deleteItem(position)
@@ -121,9 +119,9 @@ class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.
 
         viewModel.saveCartEntity(cartAndItemC.cart)*/
 
-        viewModel.saveCart(cartAndItemC.cart)
+        viewModel.saveCart(cartAndItemC.cartEntity)
 
-        Toast.makeText(requireContext(), "Agregaste ${cartAndItemC.cart.cantidad}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Agregaste ${cartAndItemC.cartEntity.cantidad}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onButtonClick3(cartAndItemC: CartAndItemC, position: Int) {
@@ -132,9 +130,9 @@ class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.
 
         viewModel.saveCartEntity(cartAndItemC.cart)*/
 
-        viewModel.saveCart(cartAndItemC.cart)
+        viewModel.saveCart(cartAndItemC.cartEntity)
 
-        Toast.makeText(requireContext(), "Eliminaste ${cartAndItemC.cart.cantidad}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Eliminaste ${cartAndItemC.cartEntity.cantidad}", Toast.LENGTH_SHORT).show()
     }
 
 }

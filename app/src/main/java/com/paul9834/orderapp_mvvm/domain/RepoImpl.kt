@@ -1,6 +1,6 @@
 package com.paul9834.orderapp_mvvm.domain
 
-import com.paul9834.orderapp_mvvm.data.model.Cart
+import com.paul9834.orderapp_mvvm.data.model.CartEntity
 import com.paul9834.orderapp_mvvm.data.model.CartAndItemC
 import com.paul9834.orderapp_mvvm.data.model.ItemEntity
 import com.paul9834.orderapp_mvvm.data.model.ProductItem
@@ -24,8 +24,8 @@ class RepoImpl (private val dataSource: DataSource): Repo {
         dataSource.deleteCartItem(itemEntity)
     }
 
-    override suspend fun addCart(cart: Cart) {
-        dataSource.addCart(cart)
+    override suspend fun addCart(cartEntity: CartEntity) {
+        dataSource.addCart(cartEntity)
     }
 
     override suspend fun getTotalOrder(): Int? {
@@ -37,12 +37,12 @@ class RepoImpl (private val dataSource: DataSource): Repo {
 
     }
 
-    override suspend fun insertCartAndItem(cart: Cart, itemEntity: ItemEntity) {
-        return dataSource.insertCartAndItem(cart,itemEntity)
+    override suspend fun insertCartAndItem(cartEntity: CartEntity, itemEntity: ItemEntity) {
+        return dataSource.insertCartAndItem(cartEntity,itemEntity)
     }
 
-    override suspend fun deleteCartEntity(cart: Cart) {
-        return dataSource.deleteCart(cart)
+    override suspend fun deleteCartEntity(cartEntity: CartEntity) {
+        return dataSource.deleteCart(cartEntity)
     }
 
 

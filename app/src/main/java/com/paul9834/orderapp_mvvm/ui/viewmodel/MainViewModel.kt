@@ -2,7 +2,7 @@ package com.paul9834.orderapp_mvvm.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.paul9834.orderapp_mvvm.data.model.Cart
+import com.paul9834.orderapp_mvvm.data.model.CartEntity
 import com.paul9834.orderapp_mvvm.data.model.ItemEntity
 import com.paul9834.orderapp_mvvm.domain.Repo
 import com.paul9834.orderapp_mvvm.vo.Resource
@@ -61,9 +61,9 @@ class MainViewModel(private val repo:Repo) : ViewModel() {
     }
 
 
-    fun guardarItem(cart: Cart, itemEntity: ItemEntity) {
+    fun guardarItem(cartEntity: CartEntity, itemEntity: ItemEntity) {
         viewModelScope.launch {
-            repo.insertCartAndItem(cart, itemEntity)
+            repo.insertCartAndItem(cartEntity, itemEntity)
         }
     }
 
@@ -89,9 +89,9 @@ class MainViewModel(private val repo:Repo) : ViewModel() {
         }
     }
 
-    fun deleteCartEntity(cart: Cart) {
+    fun deleteCartEntity(cartEntity: CartEntity) {
         viewModelScope.launch {
-            repo.deleteCartEntity(cart)
+            repo.deleteCartEntity(cartEntity)
         }
     }
 
@@ -101,9 +101,9 @@ class MainViewModel(private val repo:Repo) : ViewModel() {
         }
     }
 
-    fun saveCart (cart: Cart) {
+    fun saveCart (cartEntity: CartEntity) {
         viewModelScope.launch {
-            repo.addCart(cart)
+            repo.addCart(cartEntity)
         }
     }
 

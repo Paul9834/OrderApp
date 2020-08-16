@@ -35,7 +35,7 @@ data class Item (
 
 @Entity(foreignKeys = [ForeignKey(entity = ItemEntity::class,
         parentColumns = arrayOf("id"), childColumns = arrayOf("id"), onDelete = CASCADE)])
-data class Cart (
+data class CartEntity (
         @PrimaryKey (autoGenerate = true)
         var id: Int = 0,
         var cantidad: Long = 1
@@ -46,9 +46,28 @@ data class CartAndItemC(
                 parentColumn = "id",
                 entityColumn = "id"
         )
-        val cart: Cart,
+        val cartEntity: CartEntity,
         @Embedded val itemEntity: ItemEntity
 )
+
+@Entity(tableName = "itemEntity")
+data class ItemEntity(
+        @PrimaryKey
+        val id: Int = 0,
+        @ColumnInfo(name = "producto_createdat")
+        val createdAt: String = "",
+        @ColumnInfo(name = "producto_descripcion")
+        val description: String = "",
+        @ColumnInfo(name = "producto_imagen")
+        val img_url: String = "",
+        @ColumnInfo(name = "producto_nombre")
+        val name: String = "",
+        @ColumnInfo(name = "producto_precio")
+        val price: Int = 0,
+        @ColumnInfo(name = "producto_updatedAt")
+        val updatedAt: String = ""
+)
+
 
 
 

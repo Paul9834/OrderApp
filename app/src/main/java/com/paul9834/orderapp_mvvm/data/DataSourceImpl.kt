@@ -1,7 +1,7 @@
 package com.paul9834.orderapp_mvvm.data
 
 
-import com.paul9834.orderapp_mvvm.data.model.Cart
+import com.paul9834.orderapp_mvvm.data.model.CartEntity
 import com.paul9834.orderapp_mvvm.data.model.CartAndItemC
 import com.paul9834.orderapp_mvvm.data.model.ItemEntity
 import com.paul9834.orderapp_mvvm.data.model.ProductItem
@@ -36,16 +36,16 @@ class DataSourceImpl (private val appDataBase:AppDataBase):DataSource{
         return Resource.Success(appDataBase.userCart().getDogsAndOwners())
     }
 
-    override suspend fun insertCartAndItem(cart: Cart, itemEntity: ItemEntity) {
-        return appDataBase.userCart().insertCartAndItem(cart, itemEntity)
+    override suspend fun insertCartAndItem(cartEntity: CartEntity, itemEntity: ItemEntity) {
+        return appDataBase.userCart().insertCartAndItem(cartEntity, itemEntity)
     }
 
-    override suspend fun deleteCart(cart: Cart) {
-        return appDataBase.userCart().deleteCart(cart)
+    override suspend fun deleteCart(cartEntity: CartEntity) {
+        return appDataBase.userCart().deleteCart(cartEntity)
     }
 
-    override suspend fun addCart(cart: Cart) {
-        appDataBase.userCart().insertCart(cart)
+    override suspend fun addCart(cartEntity: CartEntity) {
+        appDataBase.userCart().insertCart(cartEntity)
     }
 
 

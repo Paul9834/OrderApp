@@ -15,8 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.*
 import com.paul9834.orderapp_mvvm.R
 import com.paul9834.orderapp_mvvm.data.DataSourceImpl
-import com.paul9834.orderapp_mvvm.data.model.Cart
-import com.paul9834.orderapp_mvvm.data.model.Item
+import com.paul9834.orderapp_mvvm.data.model.CartEntity
 import com.paul9834.orderapp_mvvm.data.model.ItemEntity
 import com.paul9834.orderapp_mvvm.data.model.ProductItem
 import com.paul9834.orderapp_mvvm.domain.RepoImpl
@@ -85,11 +84,11 @@ class ProductDetailsFragment : Fragment() {
         btn_addcart.setOnClickListener{
 
 
-            val cart: Cart = Cart()
+            val cartEntity: CartEntity = CartEntity()
 
             val itemEntity:ItemEntity = ItemEntity(productItem.id, productItem.createdAt, productItem.description, productItem.img_url, productItem.name, productItem.price, productItem.updatedAt)
 
-            viewModel.guardarItem(cart, itemEntity)
+            viewModel.guardarItem(cartEntity, itemEntity)
 
 
 

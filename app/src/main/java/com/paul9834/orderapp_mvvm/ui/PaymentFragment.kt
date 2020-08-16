@@ -96,7 +96,7 @@ class PaymentFragment : Fragment() {
 
                     for (i in item) {
                         val item:Item = Item(i.itemEntity.id, i.itemEntity.name, i.itemEntity.description, i.itemEntity.price, i.itemEntity.img_url, i.itemEntity.createdAt, i.itemEntity.updatedAt)
-                        invoiceItems.add(InvoiceItems(i.cart.cantidad.toInt(),item))
+                        invoiceItems.add(InvoiceItems(i.cartEntity.cantidad.toInt(),item))
                     }
 
                     val factura = Invoice(name.toString(), address.toString(), 1000, invoiceItems)
@@ -144,7 +144,7 @@ class PaymentFragment : Fragment() {
                     val resultData = result.data
 
                     val cart = result.data.map {
-                        CartAndItemC(it.cart, it.itemEntity)
+                        CartAndItemC(it.cartEntity, it.itemEntity)
                     }.toMutableList()
 
                     item = cart

@@ -38,24 +38,6 @@ data class ProductItem(
 
 
 
-@Entity(tableName = "itemEntity")
-data class ItemEntity(
-        @PrimaryKey
-        val id: Int = 0,
-        @ColumnInfo(name = "producto_createdat")
-        val createdAt: String = "",
-        @ColumnInfo(name = "producto_descripcion")
-        val description: String = "",
-        @ColumnInfo(name = "producto_imagen")
-        val img_url: String = "",
-        @ColumnInfo(name = "producto_nombre")
-        val name: String = "",
-        @ColumnInfo(name = "producto_precio")
-        val price: Int = 0,
-        @ColumnInfo(name = "producto_updatedAt")
-        val updatedAt: String = ""
-)
-
 
 
 

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.paul9834.orderapp_mvvm.data.model.*
 import com.paul9834.orderapp_mvvm.domain.UserCartDAO
 
-@Database(entities = [ItemEntity::class, Cart::class], version = 1)
+@Database(entities = [ItemEntity::class, CartEntity::class], version = 1)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun userCart(): UserCartDAO

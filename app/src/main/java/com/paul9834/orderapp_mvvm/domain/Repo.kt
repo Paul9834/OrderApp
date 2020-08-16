@@ -1,6 +1,6 @@
 package com.paul9834.orderapp_mvvm.domain
 
-import com.paul9834.orderapp_mvvm.data.model.Cart
+import com.paul9834.orderapp_mvvm.data.model.CartEntity
 import com.paul9834.orderapp_mvvm.data.model.CartAndItemC
 import com.paul9834.orderapp_mvvm.data.model.ItemEntity
 import com.paul9834.orderapp_mvvm.data.model.ProductItem
@@ -20,14 +20,14 @@ interface Repo {
 
     suspend fun getCartAndItemC(): Resource<List<CartAndItemC>>
 
-    suspend fun insertCartAndItem(cart: Cart, itemEntity: ItemEntity)
+    suspend fun insertCartAndItem(cartEntity: CartEntity, itemEntity: ItemEntity)
 
 
-    suspend fun deleteCartEntity(cart: Cart)
+    suspend fun deleteCartEntity(cartEntity: CartEntity)
 
     suspend fun deleteEntity(itemEntity: ItemEntity)
 
-    suspend fun addCart(cart: Cart)
+    suspend fun addCart(cartEntity: CartEntity)
 
 
 
