@@ -1,5 +1,6 @@
 package com.paul9834.orderapp_mvvm.ui
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
 import com.paul9834.orderapp_mvvm.R
 import com.paul9834.orderapp_mvvm.data.DataSourceImpl
@@ -46,11 +48,16 @@ class PaymentFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
 
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
+        setupObserverItems ()
+
 
         return inflater.inflate(R.layout.fragment_payment, container, false)
     }
@@ -63,15 +70,20 @@ class PaymentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupObserver ()
         setupObserverItems ()
 
+
+        Toast.makeText(requireContext(), "${arguments?.getString("amount")}", Toast.LENGTH_SHORT).show()
+        txt_total_price.text = arguments?.getString("amount")
+
+        // calcOrderTotal(factura)
 
         floating_action_button_payment.setOnClickListener {
             setupForm ()
         }
 
     }
+
 
     private fun setupForm () {
 
@@ -88,18 +100,13 @@ class PaymentFragment : Fragment() {
             if (!(address.isNullOrBlank())) {
                 if (!(phone.isNullOrBlank())) {
 
-                    val telefono = phone.toString()
-
-                 /*   for (product in item) {
-                        invoiceItems.add(InvoiceItems(1, product))
-                    }*/
 
                     for (i in item) {
                         val item:Item = Item(i.itemEntity.id, i.itemEntity.name, i.itemEntity.description, i.itemEntity.price, i.itemEntity.img_url, i.itemEntity.createdAt, i.itemEntity.updatedAt)
                         invoiceItems.add(InvoiceItems(i.cartEntity.cantidad.toInt(),item))
                     }
 
-                    val factura = Invoice(name.toString(), address.toString(), 1000, invoiceItems)
+                    val factura = Invoice("name.toString()", "address.toString()", 1000, invoiceItems)
 
                     Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
 
@@ -123,19 +130,6 @@ class PaymentFragment : Fragment() {
     }
 
 
-    private fun setupObserver() {
-        viewModel.totalOrder.observe(viewLifecycleOwner, Observer { result ->
-            if (result == null) {
-                txt_total_price.text = "$ 0"
-            } else {
-                txt_total_price.text = "$ ${result}"
-
-            }
-        })
-
-        viewModel.result()
-    }
-
     private fun setupObserverItems () {
         viewModel.getDataTable().observe(viewLifecycleOwner, Observer { result ->
             when (result) {
@@ -149,7 +143,7 @@ class PaymentFragment : Fragment() {
 
                     item = cart
 
-                                     }
+                  }
                 }
             })
 

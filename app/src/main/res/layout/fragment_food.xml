@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/mazzardhbold"
+        android:fontFamily="@font/poppins_semibold"
         android:textSize="35sp"
         android:layout_marginTop="25dp"
         android:layout_marginStart="30dp"

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -23,11 +24,13 @@ import com.paul9834.orderapp_mvvm.ui.viewmodel.VMFactory
 import com.paul9834.orderapp_mvvm.vo.AppDataBase
 import com.paul9834.orderapp_mvvm.vo.Resource
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_payment.*
 
 
 class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.onMoreChooseListener, CartAdapter.onReduceChooseListener {
 
     private lateinit var adapterCart:CartAdapter
+    private lateinit var cart_final:MutableList<CartAndItemC>
 
     private val viewModel by activityViewModels<MainViewModel> {
         VMFactory(
@@ -63,8 +66,11 @@ class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.
         btn_pay_details.hide()
 
 
+
         btn_pay_details.setOnClickListener{
-            findNavController().navigate(R.id.action_cartFragment_to_paymentFragment)
+            val total = calcOrderTotal()
+            var bundle_total = bundleOf("amount" to total.toString())
+            findNavController().navigate(R.id.action_cartFragment_to_paymentFragment, bundle_total)
         }
     }
 
@@ -86,11 +92,11 @@ class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.
                 is Resource.Success -> {
                     Log.e("Result", "${result.data}")
                     val resultData = result.data
-
-
                     val cart = result.data.map {
                         CartAndItemC(it.cartEntity, it.itemEntity)
                     }.toMutableList()
+
+                    cart_final = cart
 
                     adapterCart = CartAdapter(requireContext(), cart, this, this, this)
                     rv_cart_items.adapter = adapterCart
@@ -102,6 +108,18 @@ class CartFragment : Fragment(),  CartAdapter.onButtonClickListener,CartAdapter.
             }
         })
     }
+
+
+    private fun calcOrderTotal() : Int {
+        var total_order = 0;
+        cart_final.forEach { item ->
+            val total = item.itemEntity.price * (item.cartEntity.cantidad).toInt()
+            total_order += total
+        }
+        return total_order;
+    }
+
+
     override fun onButtonClick(cartAndItemC: CartAndItemC, position: Int) {
 
         viewModel.deleteCartEntity(cartAndItemC.cartEntity)
