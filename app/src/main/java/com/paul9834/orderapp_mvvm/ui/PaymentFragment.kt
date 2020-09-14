@@ -43,15 +43,6 @@ class PaymentFragment : Fragment() {
         )
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -62,21 +53,14 @@ class PaymentFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_payment, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-        
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupObserverItems ()
 
-
         Toast.makeText(requireContext(), "${arguments?.getString("amount")}", Toast.LENGTH_SHORT).show()
         txt_total_price.text = arguments?.getString("amount")
-
-        // calcOrderTotal(factura)
 
         floating_action_button_payment.setOnClickListener {
             setupForm ()
@@ -100,20 +84,7 @@ class PaymentFragment : Fragment() {
             if (!(address.isNullOrBlank())) {
                 if (!(phone.isNullOrBlank())) {
 
-
-                    for (i in item) {
-                        val item:Item = Item(i.itemEntity.id, i.itemEntity.name, i.itemEntity.description, i.itemEntity.price, i.itemEntity.img_url, i.itemEntity.createdAt, i.itemEntity.updatedAt)
-                        invoiceItems.add(InvoiceItems(i.cartEntity.cantidad.toInt(),item))
-                    }
-
-                    val factura = Invoice("name.toString()", "address.toString()", 1000, invoiceItems)
-
-                    Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
-
-                    val gson = Gson()
-                    val json = gson.toJson(factura)
-
-                    Log.e("ResultInvoice", "$json Holaa")
+                    createOrderSetups()
 
                 } else {
                     txt_name_client3.requestFocus()
@@ -127,6 +98,26 @@ class PaymentFragment : Fragment() {
             txt_name_client.requestFocus()
             txt_name_client.error = "Verifica los datos ingresados"
         }
+    }
+
+
+    private fun createOrderSetups() {
+
+        for (i in item) {
+            val item:Item = Item(i.itemEntity.id, i.itemEntity.name, i.itemEntity.description, i.itemEntity.price, i.itemEntity.img_url, i.itemEntity.createdAt, i.itemEntity.updatedAt)
+            invoiceItems.add(InvoiceItems(i.cartEntity.cantidad.toInt(),item))
+        }
+
+        val factura = Invoice("name.toString()", "address.toString()", 1000, invoiceItems)
+
+        Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+
+        val gson = Gson()
+        val json = gson.toJson(factura)
+
+        Log.e("ResultInvoice", "$json Holaa")
+
+
     }
 
 
@@ -146,10 +137,6 @@ class PaymentFragment : Fragment() {
                   }
                 }
             })
-
-    }
-    private fun createOrder () {
-
 
     }
 }
